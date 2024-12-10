@@ -45,12 +45,23 @@ end
 % Display the structure array to verify the loaded data
 disp(loaded_data);
 
+%% RAW MASKS
+
+masks = {};
+
+for i=1:4
+    snr_map = loaded_data(i,4).data.met_map.SNR;
+    mask = snr_map > 0;
+
+    masks{i} = mask;
+
+end
+
 %%
 fwhms = [];
 for i=1:4
     fwhm_map = loaded_data(i,4).data.met_map.FWHM;
-    snr_map = loaded_data(i,4).data.met_map.SNR;
-    mask = snr_map > 4;
+    mask = masks{i};
 
     fwhm_map_filtered = fwhm_map(mask);
 
